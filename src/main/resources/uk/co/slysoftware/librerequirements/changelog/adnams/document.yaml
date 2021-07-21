@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: documents_GEN-xx
+      author: peter.fox@slysoftware.co.uk
+      changes:
+        - createTable:
+            tableName: document
+            remarks: the requirements
+            columns:
+              - column:
+                  name: file_url
+                  type: VARCHAR(4000)
+                  remarks: file URL
+              - column:
+                  name: title
+                  type: VARCHAR(4000)
+                  remarks: the short name of the document
+              - column:
+                  name: subject
+                  type: VARCHAR(4000)
+                  remarks: description of the document, like what contain
+              - column:
+                  name: status
+                  type: VARCHAR(4000)
+                  remarks: the Jira identifier for the issue. Should be something like GEN-1234 should be an EPIC
+              - column:
+                  name: version
+                  type: VARCHAR(4000)
+                  remarks: the issue URL, this is a denormalisation of the issue since you should get one from other
+              - column:
+                  name: author
+                  type: VARCHAR(4000)
+                  remarks: the issue URL, this is a denormalisation of the issue since you should get one from other
+              - column:
+                  name: issue
+                  type: VARCHAR(4000)
+                  remarks: the issue URL, this is a denormalisation of the issue since you should get one from other

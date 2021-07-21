@@ -1,0 +1,62 @@
+plugins {
+	id 'com.palantir.git-version' version '0.12.3'
+    id 'com.google.cloud.tools.jib' version '1.8.0'
+	id 'java'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+
+dependencies {
+    runtime files('/Applications/LibreOffice.app/Contents/MacOS', '/Applications/LibreOffice.app/Contents/Frameworks')
+    implementation 'com.beust:jcommander:1.81'
+    implementation 'org.libreoffice:libreoffice:7.1.4'
+
+    implementation 'org.slf4j:slf4j-api:1.7.31'
+    implementation 'org.slf4j:slf4j-simple:1.7.31'
+
+    implementation 'org.yaml:snakeyaml:1.29'
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.1'
+    implementation 'org.liquibase:liquibase-core:4.4.1'
+}
+
+application {
+    mainClass = "uk.co.slysoftware.librerequirements.Main"
+}
+
+ext {
+    dockerRepository = 'petethefox'
+}
+
+jib {
+
+    from {
+        image = project.property('dockerRepository') + '/libreoffice:latest'
+    }
+    to {
+        image= project.property('dockerRepository') + '/requirements:latest'
+        auth {
+            username = System.getenv('DOCKER_USERNAME')
+            password = System.getenv('DOCKER_PASSWORD')
+        }
+    }
+    container {
+        extraClasspath = ['/usr/lib/libreoffice/program', '/usr/bin']
+    }
+}
+
+task showVersion {
+    doLast {
+        println "\nCurrent version: ${gitVersion()}\n"
+        def details = versionDetails()
+        println "last tag          : ${details.lastTag}"
+        println "commit distance   : ${details.commitDistance}"
+        println "hash              : ${details.gitHash}"
+        println "branch name       : ${details.branchName}"
+        println "is clean tag      : ${details.isCleanTag}"
+    }
+}

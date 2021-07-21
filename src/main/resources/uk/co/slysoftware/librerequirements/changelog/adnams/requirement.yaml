@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: requirements_GEN-xx
+      author: peter.fox@slysoftware.co.uk
+      changes:
+        - createTable:
+            tableName: requirement
+            remarks: the requirements
+            columns:
+              - column:
+                  name: doc_title
+                  type: VARCHAR(4000)
+                  remarks: title of the doc its in
+              - column:
+                  name: tag
+                  type: VARCHAR(4000)
+                  remarks: the short name of the requirement
+              - column:
+                  name: description
+                  type: VARCHAR(4000)
+                  remarks: description of the requirement, what does it do
+              - column:
+                  name: issue
+                  type: VARCHAR(4000)
+                  remarks: the Jira identifier for the document. Should be something like GEN-1234, which is an STORY
+              - column:
+                  name: issueUrl
+                  type: VARCHAR(4000)
+                  remarks: the issue URL, this is a denormalisation of the issue since you should get one from other
